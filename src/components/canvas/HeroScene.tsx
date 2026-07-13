@@ -15,7 +15,7 @@ export default function HeroScene() {
   const [monitorRef, monitorApi] = useBox(() => ({
     mass: 0,
     position: [0, 1, -2],
-    args: [4, 3, 0.2],
+    args: [6, 4.5, 0.2],
   })) as any;
 
   // Keyboard body (physics body)
@@ -49,21 +49,23 @@ export default function HeroScene() {
       <spotLight position={[-5, 5, -5]} angle={0.5} penumbra={1} intensity={1} color="#7b61ff" />
 
       {/* Monitor */}
-      <mesh ref={monitorRef}>
-        <boxGeometry args={[4, 3, 0.2]} />
-        <meshStandardMaterial color="#111111" metalness={0.8} roughness={0.2} />
+      <group ref={monitorRef}>
+        <mesh>
+          <boxGeometry args={[6, 4.5, 0.2]} />
+          <meshStandardMaterial color="#111111" metalness={0.8} roughness={0.2} />
+        </mesh>
         
         {/* Terminal Screen (Embedded HTML) */}
         {bootState === "terminal" && (
           <Html
             transform
             position={[0, 0, 0.11]}
-            scale={0.15}
+            scale={0.25}
           >
             <TerminalUI />
           </Html>
         )}
-      </mesh>
+      </group>
 
       {/* Keyboard Base */}
       <mesh ref={keyboardRef}>
