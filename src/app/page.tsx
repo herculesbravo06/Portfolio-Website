@@ -24,7 +24,7 @@ export default function Home() {
   const setBootState = useAppStore((state) => state.setBootState);
 
   return (
-    <main className="relative w-full bg-black text-white">
+    <main className="relative w-full text-white">
       {bootState === "booting" && (
         <LoadingScreen onComplete={() => setBootState("terminal")} />
       )}

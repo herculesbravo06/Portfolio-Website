@@ -44,7 +44,7 @@ export default function CinematicExperience() {
 
   return (
     <>
-      <div className="fixed inset-0 w-full h-full pointer-events-auto -z-10">
+      <div className="fixed inset-0 w-full h-full pointer-events-auto z-0">
         <Canvas
           camera={{ position: [0, 0, 5], fov: 45 }}
           gl={{ antialias: true, alpha: false }}
