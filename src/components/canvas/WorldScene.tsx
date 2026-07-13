@@ -16,30 +16,89 @@ export default function WorldScene() {
   const bootState = useAppStore((state) => state.bootState);
   const { camera } = useThree();
   
-  // The world scene is only visible once we transition past the hero screen
   const isVisible = bootState === "exploding" || bootState === "world";
 
-  // Use a ref to group the sections
-  const sectionsGroupRef = useRef<THREE.Group>(null);
+  // Refs for each section to animate them individually
+  const aboutRef = useRef<THREE.Group>(null);
+  const skillsRef = useRef<THREE.Group>(null);
+  const projectsRef = useRef<THREE.Group>(null);
+  const experienceRef = useRef<THREE.Group>(null);
+  const contactRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
     if (bootState === "world") {
-      // Set up ScrollTrigger to move the camera down the Z and Y axis as user scrolls
+      // Ensure camera is fixed at origin
+      camera.position.set(0, 0, 5);
       
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: "body",
           start: "top top",
           end: "bottom bottom",
-          scrub: 1, // Smooth scrubbing
+          scrub: 1,
         }
       });
 
-      // Camera flies down through the space, looking at the sections
-      tl.to(camera.position, {
-        y: -120,
-        z: -30,
-        ease: "none",
+      // Array of sections in order
+      const sections = [
+        aboutRef.current,
+        skillsRef.current,
+        projectsRef.current,
+        experienceRef.current,
+        contactRef.current
+      ];
+
+      // For each section, we create a sequence:
+      // 1. Starts far in the background (z: -30) and invisible/small
+      // 2. Comes to foreground (z: 0) and stays steady
+      // 3. Floats past the camera (z: 10)
+      
+      sections.forEach((section, index) => {
+        if (!section) return;
+        
+        // Initial state
+        gsap.set(section.position, { z: -40, y: -5 });
+        gsap.set(section.scale, { x: 0.1, y: 0.1, z: 0.1 });
+        
+        // 1. Bring into view
+        tl.to(section.position, {
+          z: 0,
+          y: 0,
+          duration: 2,
+          ease: "power2.out",
+        }, index === 0 ? "+=0" : "-=0.5"); // Slight overlap in transition
+        
+        tl.to(section.scale, {
+          x: 1,
+          y: 1,
+          z: 1,
+          duration: 2,
+          ease: "power2.out",
+        }, "<");
+
+        // 2. Stay steady (dummy tween to hold position)
+        tl.to(section.position, {
+          z: 0.5,
+          duration: 1,
+        });
+
+        // 3. Float back into the distance (backside small thing)
+        // Only if it's not the last section
+        if (index < sections.length - 1) {
+          tl.to(section.position, {
+            z: -40,
+            y: 10,
+            duration: 1.5,
+            ease: "power2.in",
+          });
+          tl.to(section.scale, {
+            x: 0.1,
+            y: 0.1,
+            z: 0.1,
+            duration: 1.5,
+            ease: "power2.in",
+          }, "<");
+        }
       });
     }
   }, [bootState, camera]);
@@ -47,17 +106,31 @@ export default function WorldScene() {
   if (!isVisible) return null;
 
   return (
-    <group ref={sectionsGroupRef} position={[0, -10, -5]}>
+    <group>
+      {/* 
+        All sections are rendered here but their positions 
+        are entirely controlled by the GSAP timeline above. 
+        We set initial positions out of view so they don't flash before GSAP kicks in.
+      */}
+      <group ref={aboutRef} position={[0, -50, -100]}>
+        <AboutBrain />
+      </group>
       
-      <AboutBrain position={[0, -5, 0]} />
+      <group ref={skillsRef} position={[0, -50, -100]}>
+        <SkillsPlanets />
+      </group>
       
-      <SkillsPlanets position={[0, -30, -5]} />
+      <group ref={projectsRef} position={[0, -50, -100]}>
+        <ProjectsCubes />
+      </group>
       
-      <ProjectsCubes position={[0, -60, -10]} />
+      <group ref={experienceRef} position={[0, -50, -100]}>
+        <ExperienceControl />
+      </group>
       
-      <ExperienceControl position={[0, -90, -15]} />
-      
-      <ContactEarth position={[0, -120, -20]} />
+      <group ref={contactRef} position={[0, -50, -100]}>
+        <ContactEarth />
+      </group>
       
     </group>
   );
