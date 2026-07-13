@@ -33,11 +33,11 @@ export default function HeroScene() {
       monitorApi.mass.set(5);
       keyboardApi.mass.set(3);
       
-      // Apply explosive forces
-      monitorApi.applyImpulse([0, 10, -5], [0, 0, 0]);
+      // Apply explosive forces to clear the screen
+      monitorApi.applyImpulse([-20, 20, -10], [0, 0, 0]);
       monitorApi.applyTorque([5, 5, 5]);
 
-      keyboardApi.applyImpulse([0, 5, 5], [0, 0, 0]);
+      keyboardApi.applyImpulse([20, -20, 10], [0, 0, 0]);
       keyboardApi.applyTorque([-5, 10, 2]);
     }
   }, [bootState, monitorApi, keyboardApi]);

@@ -21,10 +21,11 @@ export default function SkillsPlanets(props: any) {
       <mesh ref={meshRef}>
         <sphereGeometry args={[1.5, 32, 32]} />
         <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} wireframe />
-        <Html position={[0, -2.5, 0]} transform center distanceFactor={8}>
-          <div className="text-3xl font-bold text-white tracking-widest text-shadow-glow">SKILLS</div>
-        </Html>
       </mesh>
+      
+      <Html position={[0, -2.5, 0]} transform center distanceFactor={8}>
+        <div className="text-3xl font-bold text-white tracking-widest text-shadow-glow">SKILLS</div>
+      </Html>
 
       {/* Orbiting Planets for each category */}
       {technicalSkills.map((category, index) => {
