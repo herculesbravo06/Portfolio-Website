@@ -68,7 +68,7 @@ function ProjectCube({ project, position }: { project: any, position: [number, n
 
       <Html position={[0, -2, 0]} transform center distanceFactor={6}>
         <div 
-          className={`transition-all duration-500 w-[300px] p-4 glass rounded-xl border border-white/10 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-2'}`}
+          className={`transition-all duration-500 w-[400px] p-6 glass rounded-xl border border-white/10 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-2'}`}
         >
           <div className="flex items-center gap-2 mb-2">
             <span className="text-2xl">{project.icon}</span>

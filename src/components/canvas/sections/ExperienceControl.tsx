@@ -36,17 +36,17 @@ export default function ExperienceControl(props: any) {
         return (
           <group key={index} position={[x, 0, z]} rotation={[0, rotY, 0]}>
             <Html transform center distanceFactor={6}>
-              <div className="w-[450px] p-6 glass bg-black/60 backdrop-blur-xl border-l-4 border-l-[#00d4ff] rounded-r-xl text-white">
-                <div className="flex justify-between items-start mb-4">
+              <div className="w-[550px] p-8 glass bg-black/60 backdrop-blur-xl border-l-4 border-l-[#00d4ff] rounded-r-xl text-white">
+                <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h3 className="text-xl font-bold text-[#00d4ff]">{exp.title}</h3>
-                    <p className="text-gray-300 font-semibold">{exp.company}</p>
+                    <h3 className="text-2xl font-bold text-[#00d4ff] mb-1">{exp.title}</h3>
+                    <p className="text-lg text-gray-300 font-semibold">{exp.company}</p>
                   </div>
-                  <span className="text-xs px-2 py-1 bg-white/10 rounded-full text-gray-300 whitespace-nowrap">
+                  <span className="text-sm px-3 py-1 bg-white/10 rounded-full text-gray-300 whitespace-nowrap">
                     {exp.period}
                   </span>
                 </div>
-                <ul className="space-y-2 mb-4">
+                <ul className="space-y-3 mb-6">
                   {exp.description.slice(0, 2).map((desc, i) => (
                     <li key={i} className="text-sm opacity-80 pl-4 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-[#00d4ff] before:rounded-full">
                       {desc}

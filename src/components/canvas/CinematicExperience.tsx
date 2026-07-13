@@ -7,12 +7,15 @@ import { Suspense, useEffect } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useAppStore } from "@/lib/store";
 import HeroScene from "./HeroScene";
 import WorldScene from "./WorldScene";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CinematicExperience() {
+  const bootState = useAppStore((state) => state.bootState);
+
   useEffect(() => {
     // Initialize Lenis
     const lenis = new Lenis({
@@ -57,9 +60,11 @@ export default function CinematicExperience() {
           <Suspense fallback={null}>
             <Environment preset="city" />
             
-            <Physics gravity={[0, 0, 0]}>
-              <HeroScene />
-            </Physics>
+            {bootState !== "world" && (
+              <Physics gravity={[0, 0, 0]}>
+                <HeroScene />
+              </Physics>
+            )}
             
             <WorldScene />
           </Suspense>

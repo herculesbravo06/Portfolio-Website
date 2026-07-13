@@ -49,8 +49,8 @@ export default function ContactEarth(props: any) {
       </mesh>
 
       {/* Contact Form Panel */}
-      <Html position={[2, 0, 0]} transform center distanceFactor={8}>
-        <div className="w-[400px] p-8 glass bg-black/80 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl text-white">
+      <Html position={[3, 0, 0]} transform center distanceFactor={8}>
+        <div className="w-[500px] p-8 glass bg-black/80 backdrop-blur-2xl border border-white/20 rounded-2xl shadow-2xl text-white">
           <h2 className="text-3xl font-bold mb-2">Establish Connection</h2>
           <p className="text-gray-400 text-sm mb-6">Transmit signal to coordinates: {personalInfo.location}</p>
           
