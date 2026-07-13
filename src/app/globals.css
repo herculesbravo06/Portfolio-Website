@@ -1,0 +1,343 @@
+@import "tailwindcss";
+
+/* ============================================================
+   HARIN BHAVSAR — AI PORTFOLIO DESIGN SYSTEM
+   ============================================================ */
+
+/* ---- Design Tokens ---- */
+:root {
+  --color-bg: #050510;
+  --color-bg-elevated: #0a0a1a;
+  --color-bg-alt: #080820;
+  --color-surface: #111128;
+  --color-surface-hover: #161640;
+  --color-border: #1a1a3e;
+  --color-border-glow: rgba(0, 212, 255, 0.2);
+  --color-primary: #00d4ff;
+  --color-secondary: #7b61ff;
+  --color-accent: #00ff88;
+  --color-danger: #ff4757;
+  --color-warning: #ffa726;
+  --color-text: #e8e8f0;
+  --color-text-muted: #6b6b8d;
+  --color-text-dim: #3d3d5c;
+  --color-glow-primary: rgba(0, 212, 255, 0.15);
+  --color-glow-secondary: rgba(123, 97, 255, 0.15);
+  --color-glow-accent: rgba(0, 255, 136, 0.15);
+
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --glass-bg: rgba(17, 17, 40, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-blur: 20px;
+}
+
+/* ---- Global Reset ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis handles this */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* ---- Custom Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: #fff;
+}
+
+/* ---- Typography ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ---- Glassmorphism ---- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.glass-subtle {
+  background: rgba(17, 17, 40, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+}
+
+/* ---- Glow Effects ---- */
+.glow-primary {
+  box-shadow: 0 0 20px var(--color-glow-primary),
+              0 0 60px rgba(0, 212, 255, 0.05);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 20px var(--color-glow-secondary),
+              0 0 60px rgba(123, 97, 255, 0.05);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px var(--color-glow-primary),
+               0 0 40px rgba(0, 212, 255, 0.1);
+}
+
+.glow-line {
+  box-shadow: 0 0 8px var(--color-primary),
+              0 0 20px var(--color-glow-primary);
+}
+
+/* ---- Gradient Text ---- */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-accent {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Grid Background ---- */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.dot-bg {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+}
+
+/* ---- Noise Texture ---- */
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---- Particle CSS Background ---- */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  animation: float-particle linear infinite;
+  opacity: 0;
+}
+
+/* ---- Shimmer ---- */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ---- Typewriter Cursor ---- */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ---- Glitch Effect ---- */
+@keyframes glitch-1 {
+  0%, 100% { clip-path: inset(0 0 95% 0); transform: translateX(0); }
+  20% { clip-path: inset(30% 0 50% 0); transform: translateX(-4px); }
+  40% { clip-path: inset(60% 0 10% 0); transform: translateX(4px); }
+  60% { clip-path: inset(10% 0 70% 0); transform: translateX(-2px); }
+  80% { clip-path: inset(80% 0 5% 0); transform: translateX(2px); }
+}
+
+/* ---- Pulse Ring ---- */
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 0.3; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* ---- Scan Line ---- */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scanline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  animation: scanline 4s linear infinite;
+  opacity: 0.15;
+  z-index: 2;
+}
+
+/* ---- Section Spacing (Reduced to eliminate empty space) ---- */
+.section-padding {
+  padding: 80px 24px;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 100px 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-padding {
+    padding: 120px 48px;
+  }
+}
+
+/* ---- Container ---- */
+.container-main {
+  max-width: 1800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ---- Section Divider ---- */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), rgba(0, 212, 255, 0.15), var(--color-border), transparent);
+  position: relative;
+}
+
+.section-divider::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-glow-primary);
+}
+
+/* ---- Alternating section backgrounds ---- */
+.section-alt-bg {
+  background-color: var(--color-bg-alt);
+}
+
+/* ---- Counter Animation ---- */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Responsive Cursor ---- */
+@media (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* ---- Focus Visible ---- */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---- Smooth Appearance ---- */
+@keyframes fadeInPage {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.page-enter {
+  animation: fadeInPage 0.5s ease-out forwards;
+}
+
+/* ---- Radial Progress ---- */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
