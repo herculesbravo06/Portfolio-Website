@@ -7,18 +7,18 @@ import * as THREE from "three";
 import { technicalSkills } from "@/lib/data";
 
 export default function SkillsPlanets(props: any) {
-  const groupRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.05;
+    if (meshRef.current) {
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.2;
     }
   });
 
   return (
-    <group ref={groupRef} {...props}>
+    <group {...props}>
       {/* Central "Sun" */}
-      <mesh>
+      <mesh ref={meshRef}>
         <sphereGeometry args={[1.5, 32, 32]} />
         <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.5} wireframe />
         <Html position={[0, -2.5, 0]} transform center distanceFactor={8}>
@@ -47,6 +47,7 @@ export default function SkillsPlanets(props: any) {
 
 function Planet({ category, radius, speed, startAngle }: { category: any, radius: number, speed: number, startAngle: number }) {
   const planetRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const ringRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
@@ -54,9 +55,14 @@ function Planet({ category, radius, speed, startAngle }: { category: any, radius
       const time = state.clock.elapsedTime * speed;
       const angle = startAngle + time;
       
+      // Move the group in a circle
       planetRef.current.position.x = Math.cos(angle) * radius;
       planetRef.current.position.z = Math.sin(angle) * radius;
-      planetRef.current.rotation.y += 0.01;
+    }
+    
+    if (meshRef.current) {
+      // Spin the planet itself, but not the HTML
+      meshRef.current.rotation.y += 0.02;
     }
   });
 
@@ -70,7 +76,7 @@ function Planet({ category, radius, speed, startAngle }: { category: any, radius
 
       {/* The Planet */}
       <group ref={planetRef}>
-        <mesh>
+        <mesh ref={meshRef}>
           <sphereGeometry args={[0.6, 16, 16]} />
           <meshStandardMaterial color={category.color} metalness={0.5} roughness={0.2} />
         </mesh>

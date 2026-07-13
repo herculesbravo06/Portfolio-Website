@@ -27,9 +27,9 @@ export default function AboutBrain(props: any) {
   }
 
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.1;
-      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
+    if (brainRef.current) {
+      brainRef.current.rotation.y = state.clock.elapsedTime * 0.1;
+      brainRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
   });
 
