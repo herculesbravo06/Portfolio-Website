@@ -11,27 +11,27 @@ export default function ExperienceControl(props: any) {
 
   useFrame((state) => {
     if (groupRef.current) {
+      // Float up and down slightly
       groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.3;
+      // Revolve based on scroll position!
+      groupRef.current.rotation.y = window.scrollY * 0.002;
     }
   });
 
   return (
-    <group ref={groupRef} {...props}>
-      {/* Decorative curved screen background */}
-      <mesh position={[0, 0, -2]}>
-        <cylinderGeometry args={[8, 8, 4, 32, 1, true, -Math.PI / 3, (2 * Math.PI) / 3]} />
-        <meshStandardMaterial color="#00d4ff" wireframe transparent opacity={0.1} side={THREE.DoubleSide} />
-      </mesh>
-
+    <group {...props}>
       <Html position={[0, 4, 0]} transform center distanceFactor={8}>
         <div className="text-4xl font-bold text-white tracking-widest text-shadow-glow">MISSION CONTROL</div>
       </Html>
 
-      {/* Experience Panels */}
-      {experiences.map((exp, index) => {
-        const x = (index - 1) * 6; // Spread horizontally
-        const z = Math.abs(index - 1) * 2; // Curve inwards
-        const rotY = (index - 1) * -0.2; // Curve rotation
+      <group ref={groupRef}>
+        {/* Experience Cards positioned in a cylinder */}
+        {experiences.map((exp, index) => {
+        const radius = 8;
+        const angle = (index / experiences.length) * Math.PI * 2;
+        const x = Math.sin(angle) * radius;
+        const z = Math.cos(angle) * radius;
+        const rotY = angle; // Face outwards
         
         return (
           <group key={index} position={[x, 0, z]} rotation={[0, rotY, 0]}>
@@ -65,6 +65,7 @@ export default function ExperienceControl(props: any) {
           </group>
         );
       })}
+      </group>
     </group>
   );
 }
