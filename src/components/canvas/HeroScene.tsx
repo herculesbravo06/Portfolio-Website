@@ -54,11 +54,11 @@ export default function HeroScene() {
         <meshStandardMaterial color="#111111" metalness={0.8} roughness={0.2} />
         
         {/* Terminal Screen (Embedded HTML) */}
-        {bootState !== "exploding" && (
+        {bootState === "terminal" && (
           <Html
             transform
             position={[0, 0, 0.11]}
-            scale={0.1}
+            scale={0.15}
           >
             <TerminalUI />
           </Html>
