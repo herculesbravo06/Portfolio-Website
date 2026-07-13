@@ -65,25 +65,6 @@ function ProjectCube({ project, position }: { project: any, position: [number, n
         <boxGeometry args={[2, 2, 2]} />
         <meshStandardMaterial color={color} wireframe emissive={color} emissiveIntensity={hovered ? 1 : 0.2} />
       </mesh>
-
-      <Html position={[0, -2, 0]} transform center distanceFactor={6}>
-        <div 
-          className={`transition-all duration-500 w-[400px] p-6 glass rounded-xl border border-white/10 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-2'}`}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-2xl">{project.icon}</span>
-            <h3 className="text-xl font-bold text-white">{project.title}</h3>
-          </div>
-          <p className="text-sm text-gray-300 mb-3">{project.subtitle}</p>
-          <div className="flex flex-wrap gap-1">
-            {project.techHighlights.slice(0, 3).map((tech: string, i: number) => (
-              <span key={i} className="text-xs bg-white/10 px-2 py-1 rounded text-gray-200">
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      </Html>
     </group>
   );
 }

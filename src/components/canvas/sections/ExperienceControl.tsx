@@ -20,10 +20,6 @@ export default function ExperienceControl(props: any) {
 
   return (
     <group {...props}>
-      <Html position={[0, 4, 0]} transform center distanceFactor={8}>
-        <div className="text-4xl font-bold text-white tracking-widest text-shadow-glow">MISSION CONTROL</div>
-      </Html>
-
       <group ref={groupRef}>
         {/* Experience Cards positioned in a cylinder */}
         {experiences.map((exp, index) => {
@@ -35,33 +31,10 @@ export default function ExperienceControl(props: any) {
         
         return (
           <group key={index} position={[x, 0, z]} rotation={[0, rotY, 0]}>
-            <Html transform center distanceFactor={6}>
-              <div className="w-[550px] p-8 glass bg-black/60 backdrop-blur-xl border-l-4 border-l-[#00d4ff] rounded-r-xl text-white">
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-[#00d4ff] mb-1">{exp.title}</h3>
-                    <p className="text-lg text-gray-300 font-semibold">{exp.company}</p>
-                  </div>
-                  <span className="text-sm px-3 py-1 bg-white/10 rounded-full text-gray-300 whitespace-nowrap">
-                    {exp.period}
-                  </span>
-                </div>
-                <ul className="space-y-3 mb-6">
-                  {exp.description.slice(0, 2).map((desc, i) => (
-                    <li key={i} className="text-sm opacity-80 pl-4 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-[#00d4ff] before:rounded-full">
-                      {desc}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap gap-2">
-                  {exp.keySkills.slice(0, 4).map((skill, i) => (
-                    <span key={i} className="text-[10px] uppercase tracking-wider px-2 py-1 bg-[#00d4ff]/10 text-[#00d4ff] border border-[#00d4ff]/30 rounded">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </Html>
+            <mesh>
+              <boxGeometry args={[4, 3, 0.1]} />
+              <meshStandardMaterial color="#00d4ff" transparent opacity={0.1} wireframe />
+            </mesh>
           </group>
         );
       })}

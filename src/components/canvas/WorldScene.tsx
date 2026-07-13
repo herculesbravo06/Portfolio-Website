@@ -30,76 +30,70 @@ export default function WorldScene() {
       // Ensure camera is fixed at origin
       camera.position.set(0, 0, 5);
       
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "body",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1,
-        }
-      });
+      // We use a small timeout to ensure the 2D DOM sections have rendered
+      setTimeout(() => {
+        const sectionsConfig = [
+          { ref: aboutRef, id: "#about" },
+          { ref: skillsRef, id: "#skills" },
+          { ref: projectsRef, id: "#projects" },
+          { ref: experienceRef, id: "#experience" },
+          { ref: contactRef, id: "#contact" },
+        ];
 
-      // Array of sections in order
-      const sections = [
-        aboutRef.current,
-        skillsRef.current,
-        projectsRef.current,
-        experienceRef.current,
-        contactRef.current
-      ];
+        sectionsConfig.forEach(({ ref, id }) => {
+          if (!ref.current) return;
+          const section = ref.current;
+          
+          // Initial state: hidden behind
+          gsap.set(section.position, { z: -40, y: -5 });
+          gsap.set(section.scale, { x: 0.1, y: 0.1, z: 0.1 });
+          
+          const domElement = document.querySelector(id);
+          if (!domElement) return;
 
-      // For each section, we create a sequence:
-      // 1. Starts far in the background (z: -30) and invisible/small
-      // 2. Comes to foreground (z: 0) and stays steady
-      // 3. Floats past the camera (z: 10)
-      
-      sections.forEach((section, index) => {
-        if (!section) return;
-        
-        // Initial state
-        gsap.set(section.position, { z: -40, y: -5 });
-        gsap.set(section.scale, { x: 0.1, y: 0.1, z: 0.1 });
-        
-        // 1. Bring into view
-        tl.to(section.position, {
-          z: 0,
-          y: 0,
-          duration: 2,
-          ease: "power2.out",
-        }, index === 0 ? "+=0" : "-=0.5"); // Slight overlap in transition
-        
-        tl.to(section.scale, {
-          x: 1,
-          y: 1,
-          z: 1,
-          duration: 2,
-          ease: "power2.out",
-        }, "<");
-
-        // 2. Stay steady (dummy tween to hold position)
-        tl.to(section.position, {
-          z: 0.5,
-          duration: 1,
-        });
-
-        // 3. Float back into the distance (backside small thing)
-        // Only if it's not the last section
-        if (index < sections.length - 1) {
-          tl.to(section.position, {
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: domElement,
+              start: "top bottom", // Trigger when top of 2D section hits bottom of screen
+              end: "bottom top",   // End when bottom of 2D section hits top of screen
+              scrub: 1,
+            }
+          })
+          // 1. Bring into view as section enters
+          .to(section.position, {
+            z: -2, // keep slightly behind 2D content
+            y: 0,
+            duration: 1,
+            ease: "power2.out",
+          })
+          .to(section.scale, {
+            x: 1,
+            y: 1,
+            z: 1,
+            duration: 1,
+            ease: "power2.out",
+          }, "<")
+          // 2. Stay steady while scrolling through section
+          .to(section.position, {
+            z: -1.5,
+            duration: 0.5,
+          })
+          // 3. Float back into distance as section leaves
+          .to(section.position, {
             z: -40,
             y: 10,
-            duration: 1.5,
+            duration: 1,
             ease: "power2.in",
-          });
-          tl.to(section.scale, {
+          })
+          .to(section.scale, {
             x: 0.1,
             y: 0.1,
             z: 0.1,
-            duration: 1.5,
+            duration: 1,
             ease: "power2.in",
           }, "<");
-        }
-      });
+        });
+      }, 100); // 100ms delay to ensure DOM is ready
     }
   }, [bootState, camera]);
 

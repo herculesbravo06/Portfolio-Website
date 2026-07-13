@@ -43,12 +43,8 @@ export default function CinematicExperience() {
   }, []);
 
   return (
-    <div className="relative w-full h-[1000vh]">
-      {/* 
-        This div provides the physical scroll height (1000vh). 
-        The canvas is fixed to the viewport.
-      */}
-      <div className="fixed inset-0 w-full h-full pointer-events-auto">
+    <>
+      <div className="fixed inset-0 w-full h-full pointer-events-auto -z-10">
         <Canvas
           camera={{ position: [0, 0, 5], fov: 45 }}
           gl={{ antialias: true, alpha: false }}
@@ -70,6 +66,6 @@ export default function CinematicExperience() {
           </Suspense>
         </Canvas>
       </div>
-    </div>
+    </>
   );
 }

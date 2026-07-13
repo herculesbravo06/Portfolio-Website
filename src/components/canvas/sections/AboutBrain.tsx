@@ -45,14 +45,6 @@ export default function AboutBrain(props: any) {
         <pointsMaterial size={0.03} color="#7b61ff" transparent opacity={0.6} />
       </points>
 
-      <Html position={[0, 0, 0]} transform distanceFactor={8}>
-        <div className="w-[700px] p-10 bg-black/60 backdrop-blur-xl border border-[#7b61ff]/30 rounded-2xl shadow-[0_0_30px_rgba(123,97,255,0.2)] text-white">
-          <h2 className="text-4xl font-bold text-[#7b61ff] mb-6">The Mindset</h2>
-          <p className="text-lg leading-relaxed opacity-90">
-            {personalInfo.summary}
-          </p>
-        </div>
-      </Html>
     </group>
   );
 }
